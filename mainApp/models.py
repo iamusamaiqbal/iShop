@@ -3,17 +3,6 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-# class User(models.Model):
-#     user_Name = models.CharField(max_length=20, default="user Name")
-#     # user_Image = models.BinaryField(default="Null")
-#     user_Email = models.CharField(max_length=20, default="user Email")
-#     user_Pass = models.CharField(max_length=20, default="user Pass")
-#     user_Mobile = models.IntegerField(default=0)
-#     user_Add = models.CharField(max_length=50, default="user Address")
-#     user_Country = models.CharField(max_length=20, default="Pakistan")
-#
-#     def __str__(self):
-#         return self.user_Name
 from django.utils.datetime_safe import datetime
 
 

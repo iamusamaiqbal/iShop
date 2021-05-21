@@ -22,15 +22,19 @@ def index(request):
 
     if request.user.is_authenticated:
         current_user = request.user
+        if Cart.objects.filter(user=current_user.id):
+            cart = Cart.objects.get(user=current_user.id)
+            cart_id = cart.id
 
-        cart = Cart.objects.get(user=current_user.id)
-        cart_id = cart.id
+            item = CartItem.objects.filter(cart_id=cart_id)
 
-        item = CartItem.objects.filter(cart_id=cart_id)
+            totalprice = item.aggregate(Sum('price')).get('price__sum')
 
-        totalprice = item.aggregate(Sum('price')).get('price__sum')
-
-        itemsinCart = item.count()
+            itemsinCart = item.count()
+        else:
+            itemsinCart = 0
+            totalprice = 0
+            item = None
     else:
         itemsinCart = None
         totalprice = 0
@@ -47,6 +51,11 @@ def index(request):
     return render(request, 'index.html', dic)
 
 
+def s_register(request):
+    form = RegisterForm()
+    return render(request, "register.html", {'form': form})
+
+
 def login(request):
     if request.method == 'POST':
 
@@ -61,8 +70,6 @@ def login(request):
 
         else:
             messages.info(request, "Incorrect username or password")
-
-    return render(request, '')
 
 
 def register(request):
@@ -82,10 +89,6 @@ def register(request):
                 # messages.success(request, "Welcome " + username)
             else:
                 messages.info(request, "Incorrect username or password")
-
-    else:
-        form = RegisterForm()
-        return render(request, "", {'form': form})
 
 
 def logout(request):
