@@ -1,0 +1,9 @@
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li class="span bg-danger p-2 rounded text-light">
+                    {{ message }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}

@@ -69,7 +69,8 @@ def login(request):
             return redirect('home')
 
         else:
-            messages.info(request, "Incorrect username or password")
+            messages.error(request, "Incorrect username or password")
+            return redirect('s')
 
 
 def register(request):
@@ -89,6 +90,10 @@ def register(request):
                 # messages.success(request, "Welcome " + username)
             else:
                 messages.info(request, "Incorrect username or password")
+        else:
+            errors = form.errors
+            messages.error(request, errors.values())
+            return redirect('s')
 
 
 def logout(request):
